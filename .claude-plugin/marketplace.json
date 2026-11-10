@@ -1,0 +1,14 @@
+{
+  "name": "bim-ai-kit",
+  "description": "Skills for building AI applications in BIM/AEC",
+  "owner": {
+    "name": "KenLP"
+  },
+  "plugins": [
+    {
+      "name": "bim-ai-architect",
+      "source": "./plugins/bim-ai-architect",
+      "description": "Decision framework for BIM AI apps: which sub-tasks go to deterministic code, which to an LLM, the contracts between them, write gates, evaluation and cost"
+    }
+  ]
+}

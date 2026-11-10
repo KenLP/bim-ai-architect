@@ -1,0 +1,12 @@
+{
+  "name": "bim-ai-architect",
+  "description": "Decision framework for BIM AI apps: which sub-tasks go to deterministic code, which to an LLM, the contracts between them, write gates, evaluation and cost",
+  "author": {
+    "name": "KenLP",
+    "url": "https://github.com/KenLP"
+  },
+  "homepage": "https://github.com/KenLP/bim-ai-architect",
+  "repository": "https://github.com/KenLP/bim-ai-architect",
+  "license": "MIT",
+  "keywords": ["bim", "aec", "revit", "ifc", "architecture", "agents", "llm"]
+}
