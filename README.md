@@ -4,6 +4,10 @@
 
 It ships as a [Claude Code](https://claude.com/claude-code) skill, and every file is plain Markdown you can read without any tool.
 
+**It runs inside your own Claude Code.** The skill is plain Markdown instructions: no server, no sign-up, no telemetry. It sends nothing anywhere beyond what your Claude Code session already does. Your models and data stay yours.
+
+<p align="center"><img src="docs/how-it-works.svg" alt="You describe a BIM AI app in plain words; the skill splits it into sub-tasks, gives each to code, AI, a hybrid or a person, and returns an Architecture Brief" width="100%"></p>
+
 ## The problem
 
 Most BIM AI apps fail for the same reason: the wrong kind of worker gets the job. A language model is asked to add up areas, decide pass/fail against a code clause, or write straight into the model. It is fluent, it is usually close, and when it is wrong the answer still looks right.
