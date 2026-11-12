@@ -32,6 +32,10 @@ This skill walks you through that split and hands back a design you can build fr
 
 The skill is written in English and replies in whatever language you write in.
 
+A second example: a read-only weekly check that compares element materials against the project specification and the client's feedback. The AI reads the documents; code does the comparing and the reporting; people approve the rules.
+
+<p align="center"><img src="docs/how-it-works-materials.svg" alt="A weekly materials check: the skill gives 7 sub-tasks to code, 4 to AI and 2 to people, and returns a brief for a read-only tool that never edits the model" width="100%"></p>
+
 ## Quick start
 
 **Claude Code, as a plugin** (two commands inside a session):
