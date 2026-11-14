@@ -16,8 +16,8 @@ The checklist is only a list of signs. The worst defects rarely show in function
 | LA2 | 🔴 | The LLM gives PASS/FAIL for a threshold check; the clauses live in the prompt | Not repeatable, not explainable | Rule pack + engine (P3); A only explains |
 | LA3 | 🔴 | The LLM calls write commands directly, with no preview and no approval | A damaged model that cannot be reverted | Write gate (P8) |
 | LA4 | 🔴 | A "run arbitrary code" tool inside the authoring software, with the same permissions as ordinary tools | Erases every safety boundary that was built | Keep it separate, off by default, compile-only or a read-only sandbox |
-| LA5 | 🟠 | One LLM call per element; raw model data dumped into the context | Expensive, slow, context overflow, the model misses things | A writes once, D runs N times (Q6, P10) |
-| LA6 | 🟠 | The LLM writes coordinates, element IDs, GUIDs | Invented IDs, accumulating geometric errors | Semantic spec + compiler (P2); IDs only chosen from a list D provides |
+| LA5 | 🟠 | One LLM call per element instead of per signature (distinct name, symbol cluster); raw model data dumped into the context | Expensive, slow, context overflow, the model misses things | A writes once, D runs N times (Q6, P10) |
+| LA6 | 🟠 | The LLM writes coordinates, element IDs, GUIDs, or reads sizes and counts straight off an image | Invented IDs, accumulating geometric errors | Semantic spec + compiler (P2); IDs only chosen from a list D provides; for images: D measures, A labels |
 | LA7 | 🟠 | An agent/multi-agent setup for a process that is already fixed | Paying for cost and uncertainty you do not need | A workflow; measure a baseline first |
 | LA8 | 🟠 | One LLM grades another LLM's evidence/output when code could check it | Model grading model, not repeatable | A D validator; LLM judges only for prose, calibrated |
 | LA9 | 🟡 | Most of the tokens go to diagnostic prose that changes no result | Money spent where it creates no value | Measure tokens per role; cut it or make it on-demand |

@@ -96,7 +96,7 @@ All under [`plugins/bim-ai-architect/skills/bim-ai-architect/`](plugins/bim-ai-a
 | `SKILL.md` | Entry point: the three modes, the six-step design procedure, the ten rules |
 | `references/01-rubric.md` | Six stages, seven questions, a two-axis matrix, the architecture ladder |
 | `references/02-patterns.md` | Ten ways to combine code and AI (interpret-then-execute, compiler, rules-first with AI for the remainder, propose-check-choose, write gate, and more) |
-| `references/03-task-catalog.md` | About 45 common BIM tasks, each with a recommended mode and pattern |
+| `references/03-task-catalog.md` | Nearly 60 common BIM tasks, each with a recommended mode and pattern |
 | `references/04-contracts-guardrails.md` | The five contracts, the write gate, BIM-specific traps (units, IDs, type vs instance, model size), rules for bolting an LLM onto a deterministic core |
 | `references/05-evals-cost.md` | Planted-defect models, gold sets, live runs, metrics, cost levers, a maturity ladder |
 | `references/06-anti-patterns.md` | 53 coded anti-patterns with severity, plus five path traces to run during a review |
@@ -112,6 +112,8 @@ Three runs so far, each by a fresh agent with no prior context:
 - **Design, generic app.** A chat-with-Revit egress checker. The agent produced a complete brief and reported about 25 unclear or inconsistent instructions, which were then fixed.
 - **Review, blind.** An older snapshot of a production audit tool for which an independent review had already listed 19 defects in its LLM layer. The agent did not see that list. It recovered 4 of the 6 high-severity defects and 9 of the 19 overall. The misses led to 13 new checklist items and the five path traces.
 - **Design, real project.** Adding an LLM planner to an existing townhouse compiler. The brief was judged usable by the project owner, and it pushed back on the request: it kept layout generation in code and limited the LLM to understanding the client's words.
+
+- **Runs for 0.2.0**, on a smaller model: about thirty design and ask runs over eleven app ideas (drawings to a new Revit file, materials check, Q&A over IFC with a 3D viewer, issue handling on a CDE, cost estimating, clash rerouting, site progress by photo and voice, handover checking, apartment layouts, drawing issue and transmittal), plus two read-only consistency audits. Each round's reported contradictions were fixed and the cases rerun until the splits were stable. The last audit still found six small wording conflicts, fixed but not re-audited.
 
 What this does **not** show: the fixes made after each run have not been re-scored on a fresh codebase, and nobody outside the author's team has used the skill yet.
 

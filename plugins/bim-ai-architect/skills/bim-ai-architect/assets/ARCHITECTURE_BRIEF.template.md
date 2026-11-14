@@ -46,14 +46,17 @@ Delete the rows you do not use.
 | Intermediate spec | A → compiler | | | |
 | Rule pack | Human+A → engine | | | |
 | Finding | engine → everywhere | | | |
-| ChangeSet | A → write gate | | | |
+| ChangeSet | D (from A or Human proposals) → write gate | | | |
+| Locked spec (LockedSpec) | D → compiler → new file | | | |
 
 Units decision: <internal standard system, where it is normalised>.
 ID decision: <which stable ID is the key>.
 
-## 5. Write path (drop this section if the app only reads and sends nothing outside)
+## 5. Write path (drop this section only if the app writes nothing and sends nothing to anyone)
 
 The same gates as `references/04-contracts-guardrails.md` section 2. Give a reason for any gate you drop.
+
+Pick the shape of the write, then read the table for that shape: **change an existing model** (ChangeSet, one transaction; creating new elements in it included) · **build a new file** (locked spec with a hash → copy of the seed → new file, never the live model; approval token bound to the spec hash) · **only send results** (preview, an approver or a send policy, a log).
 
 | Gate | Present? | How |
 |---|---|---|
@@ -68,7 +71,7 @@ The same gates as `references/04-contracts-guardrails.md` section 2. Give a reas
 | Log | | |
 | Change cap | | |
 
-Sending outside (reports, issues, email): <who approves, where it is logged>.
+Sending outside (reports, messages, email): <who approves, where it is logged>.
 Origin label (`origin`) for values the app fills in: <where it is recorded>.
 
 ## 6. Measurement plan

@@ -34,7 +34,7 @@ brief / drawings ──A──▶ intermediate spec (DSL with a schema) ──D 
 ```
 - **Use when:** you need to create or change many elements that are geometrically related.
 - **Contract:** an intermediate spec that carries domain meaning (rooms, grids, levels, which door connects which rooms), not a list of API calls. The spec can be validated before it touches the model.
-- **You usually need two specs, not one.** The *intent spec* (plot, number of storeys, number of rooms, wishes from an enum) is what A may write. The *geometric spec* (coordinates, polygons, IDs) is written only by a solver/grammar/compiler. The full flow: spoken words ──A──▶ intent spec ──D generates──▶ geometric spec ──D compiles──▶ model. Letting A write the geometric spec directly and then iterate on validator errors is the weaker design.
+- **You usually need two specs, not one.** The *intent spec* (plot, number of storeys, number of rooms, wishes from an enum) is what A may write. The *geometric spec* (coordinates, polygons, IDs) is written only by a solver/grammar/compiler. The full flow: spoken words ──A──▶ intent spec ──D generates──▶ geometric spec ──D compiles──▶ model. A never writes the geometric spec, not even to iterate on validator errors (hard rule 4).
 - **Why:** A is good at intent and bad at coordinates. The compiler handles coordinates, constraints and creation order. The same spec rebuilt gives the same model.
 - **Trap:** letting A call `create_wall` 200 times with coordinates it made up. Errors accumulate, nothing is repeatable, nothing can be diffed.
 - **Mandatory:** read-back after building (count, measure, compare with the spec), because an API that ran without errors does not mean the model is right.
@@ -53,22 +53,22 @@ brief / drawings ──A──▶ intermediate spec (DSL with a schema) ──D 
 ## P4. Propose → Check → Choose (generate and test)
 
 ```
-problem ──A or solver──▶ N options ──D validator──▶ valid options + scores ──Human or A──▶ choose
+problem ──A or solver──▶ N options ──D validator──▶ valid options + scores ──Human or D policy──▶ choose
 ```
 - **Use when:** the solution space is large but *checking one solution is cheap* (clash resolution, routing, floor layout).
 - **Who generates:** the space can be enumerated or a solver exists → D generates and scores; only otherwise does A generate. See `01-rubric.md`, section "Who generates the options?".
-- **Contract:** an option is data (a change delta), and the validator returns the reason for rejecting it. Only options that pass the validator reach a person.
+- **Contract:** an option is data (a change delta), and the validator returns the reason for rejecting it. Only options that pass the validator reach a person. The choice belongs to a person, or to a D policy table a person approved; A may rank and explain, not choose.
 - **Trap:** trusting an option that A claims has "no clashes left". Check it with real geometry, ideally previewed on the model, before writing.
 
 ## P5. Rules first, A for the remainder (cascade + ratchet)
 
 ```
 input ──D rule/lookup table──▶ matched (≈80-95%) ──▶ done
-                └─ no match ──A classifies (closed enum + confidence)──▶ low → Human approves
+                └─ no match ──A classifies (closed enum + confidence)──▶ Human approves (low confidence first)
                                               └─ approved result ──▶ added to lookup table (D handles it next time)
 ```
 - **Use when:** mapping family names to a classification, normalising parameter names, recognising room types from names, joining data from two sources.
-- **Contract:** A may only choose from the enum, with `confidence` and `evidence`. The lookup table is versioned.
+- **Contract:** A may only choose from the enum, with `confidence` and `evidence`. The lookup table is versioned. A row proposed by A joins the table only after a person approves it, whatever its confidence.
 - **Why:** cost falls over time, behaviour becomes more and more deterministic, and unusual cases are still handled.
 - **Trap:** sending 100% through A "to be safe". Expensive, slow, and it loses repeatability on the part that was already certain.
 
@@ -96,11 +96,11 @@ goal ──A (loop)──▶ choose tool ──D tool──▶ result ──▶ 
 ## P8. Write gate
 
 ```
-A proposes payload ──D validate + scope check──▶ preview (dry run by default) ──Human (or policy) approves──▶ execute in 1 transaction
+A proposes values ──D validate + scope check──▶ preview (dry run by default) ──Human (or policy) approves──▶ execute in 1 transaction
         ──▶ read-back ──▶ log ──▶ software warnings returned as data
 ```
 - **Use when:** any change to the model, the CDE, an issue, a file.
-- **Contract:** dry run is the default; the approval token is bound to the exact payload (change the payload and the token is void); a whole batch is one undo step; an automatic policy by severity (do it automatically / needs approval / only a person does it).
+- **Contract:** dry run is the default; the approval token is bound to the exact payload (change the payload and the token is void); a whole batch is one undo step; an automatic policy by severity (do it automatically / needs approval / only a person does it), where automatic covers only cases identical to ones a person approved before.
 - **Trap:** "just this once, write directly". Details: `04-contracts-guardrails.md`.
 
 ## P9. Generate-check loop (evaluator loop)

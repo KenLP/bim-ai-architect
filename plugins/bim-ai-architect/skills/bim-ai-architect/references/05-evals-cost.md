@@ -14,6 +14,7 @@ The D part is checked with unit tests. The A part is checked with evals. Without
 - Take a clean model and plant N known defects (narrow doors, missing parameters, wrong names, clashes). Keep the list of defects as the answer key.
 - Measure: how many of the N are caught (recall), how many false alarms (precision). These two numbers are the quality of the checker.
 - Plant *near-threshold* and *missing-data* cases too, to test `manual_review` and `missing_data`.
+- For apps that work on a CDE or on documents, the "planted-defect model" is a sandbox project seeded with cases whose answers are known (duplicate and near-duplicate issues, wrong owners, requirements that contradict each other).
 - For *generators* (compiler, grammar, solver) there are no "defects to find"; the equivalents are: planted bad inputs (a wrong spec must be rejected with the right code), parameter sweeps (every combination in scope gives a valid result or `infeasible`), and golden hashes (the same spec gives the same result).
 
 ### Gold set for the adaptive part
@@ -23,7 +24,7 @@ The D part is checked with unit tests. The A part is checked with evals. Without
 - Hold back part of the gold set that never goes into prompts or few-shot examples, so you are not grading what the system has already seen.
 
 ### Live run
-- Check the environment first (the software is open, the right model, the adapter answers). If something is missing, report `missing_data` instead of running anyway.
+- Check the environment first (the software is open, the right model, the adapter answers). If something is missing, record the run as blocked with the reason instead of running anyway; `missing_data` is for elements, not for runs.
 - Catches what mocks hide: units, timeouts, non-ASCII text, missing parameters, dialogs.
 - A silent system is not a pass. Beyond the four Finding statuses, the checker must recognise "no response" at run level and never read it as compliant.
 
